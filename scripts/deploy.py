@@ -3,8 +3,8 @@ from scripts.utils import  encode_function_data, get_account
 import time
 
 # Get deployment account & transacting account
-deployment_owner_account = get_account(0)
-test_account = get_account(1)
+deployment_owner_account = get_account(1)
+test_account = get_account(0)
 
 
 
