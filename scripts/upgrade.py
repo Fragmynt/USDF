@@ -53,4 +53,24 @@ def main():
         print(e.message)
         assert e.message == "VM Exception while processing transaction: revert AccessControl: account 0x66ab6d9362d4f35596279692f0251db635165871 is missing role 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
 
+    token.pause({"from": deployment_owner_account})
+
+    try:
+        token.mint(test_account, 10*10**18, {"from": deployment_owner_account})
+    except Exception as e:
+        print(e.message)
+        assert e.message == "VM Exception while processing transaction: revert Pausable: paused"
+
+    try:
+        token.transfer(deployment_owner_account, 10*10**18, {"from": test_account})
+    except Exception as e:
+        print(e.message)
+        assert e.message == "VM Exception while processing transaction: revert Pausable: paused"
+
+    token.unpause({"from": deployment_owner_account})
+
+    token.transfer(deployment_owner_account, 10*10**18, {"from": test_account})
+
+    assert token.balanceOf(deployment_owner_account) == 10*10**18
+
     time.sleep(1)

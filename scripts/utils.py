@@ -3,6 +3,9 @@ from brownie import accounts, config,  network, Contract
 def get_account(num =0 ):
     if network.show_active() == "development":
         return accounts[num]
+
+    elif network.show_active() == "fragmynt-main":
+        return  accounts.add(config['wallets']['FEN_DEPLOYMENT_PRIVATE']) 
     else:
         if num == 0:
             return  accounts.add(config['wallets']['DEPLOYMENT_PRIVATE'])
